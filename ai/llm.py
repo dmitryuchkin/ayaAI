@@ -1,15 +1,13 @@
 import httpx
 
-async def call_llm(prompt: str, system_prompt: str): 
-    final_prompt = prompt
-    if system_prompt: 
-        final_prompt = f"{system_prompt}\n\n{prompt}"
+async def call_llm(prompt: str, system_prompt: str) -> str: 
     async with httpx.AsyncClient() as client:
         res = await client.post(
             "http://localhost:11434/api/generate",
             json={
                 "model": "qwen2.5",
-                "prompt": final_prompt,
+                "prompt":f"""<SYSTEM> {system_prompt} </SYSTEM>
+                <USER> {prompt} </USER>""",
                 "stream": False
             },
         timeout=60.0

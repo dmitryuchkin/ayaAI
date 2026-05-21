@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 
 class ChatMessage(BaseModel):
-    role: str = Field(..., description="Кто говорит")
+    role: str = Field(..., description="Кто говорит user/assistant/system")
     content: str = Field(..., description="Сообщение")
 
 class ChatRequest(BaseModel):
