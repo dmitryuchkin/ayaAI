@@ -6,3 +6,7 @@ sqlalchemy
 alembic
 asyncpg
 greenlet
+pwdlib[argon2]
+chromadb
+pyjwt
+python-dotenv
