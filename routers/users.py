@@ -5,12 +5,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from pwdlib import PasswordHash
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from starlette.status import HTTP_401_UNAUTHORIZED
 from config import Settings
 from db.database import get_db
 from db.models.users import User
-from schemas.users import LoginRequest, Token, UserCreate, UserResponse, UserUpdate
+from schemas.users import Token, UserCreate, UserResponse, UserUpdate
 
 router = APIRouter(prefix="/users", tags=["Users"])
 hashed_password = PasswordHash.recommended()
@@ -68,7 +68,7 @@ async def login_user(
     if not verify_password(form_data.password, user.password):
         raise HTTPException(
             status_code=HTTP_401_UNAUTHORIZED,
-            detail="Invalid password"
+            detail="Invalid credentials"
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
